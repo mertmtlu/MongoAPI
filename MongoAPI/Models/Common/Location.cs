@@ -1,4 +1,4 @@
-﻿namespace MongoAPI.Models
+﻿namespace MongoAPI.Models.Common
 {
     public class Location
     {

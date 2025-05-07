@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using MongoAPI.Models.Common;
 
 namespace MongoAPI.Models.Hazards
 {
@@ -6,11 +7,11 @@ namespace MongoAPI.Models.Hazards
     {
         [Range(0, 1)]
         public double Score { get; set; }
-        public HazardLevel Level { get; set; }
+        public Level Level { get; set; }
         public Dictionary<T, int> EliminationCosts { get; set; } = new();
         public required bool PreviousIncidentOccurred { get; set; }
         public required string PreviousIncidentDescription { get; set; }
-        public required double DistanceToRiskInventory { get; set; }
+        public required double DistanceToInventory { get; set; }
 
     }
 
@@ -18,6 +19,11 @@ namespace MongoAPI.Models.Hazards
     {
         SmokeDetector,
         FireExtinguisher,
+    }
+
+    public enum TsunamiEliminationMethod
+    {
+
     }
 
     public enum SecurityEliminationMethod
@@ -40,16 +46,15 @@ namespace MongoAPI.Models.Hazards
 
     }
 
+    public enum RockFallEliminationMethod
+    {
+
+    }
+
     public enum FloodEliminationMethod
     {
 
     }
 
-    public enum HazardLevel
-    {
-        VeryLow,
-        Low,
-        Medium,
-        High,
-    }
+    
 }

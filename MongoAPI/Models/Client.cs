@@ -1,11 +1,14 @@
-﻿namespace MongoAPI.Models
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
+
+namespace MongoAPI.Models
 {
     public class Client
     {
-        //public int ID { get; set; } // Foreign Keys are not needed
+        [BsonId] public ObjectId Id { get; set; }
         public required string Name { get; set; }
         public ClientType Type { get; set; }
-        public required List<Region> Regions { get; set; }
+        public required List<Region> Regions { get; set; } = new();
     }
 
     public enum ClientType
