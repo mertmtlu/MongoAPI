@@ -1,6 +1,6 @@
-﻿namespace MongoAPI.Models
+﻿namespace MongoAPI.Models.KeyModels
 {
-    public class Region
+    public class Region : AEntityBase
     {
         public required int Id { get; set; }  // Replaced with No (genel_bilgi: bolge_no)
         public required List<string> Cities { get; set; }

@@ -2,7 +2,7 @@
 
 namespace MongoAPI.Models.Block
 {
-    public abstract class ABlock
+    public abstract class ABlock : AEntityBase
     {
         public string ID { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;

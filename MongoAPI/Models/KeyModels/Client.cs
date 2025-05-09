@@ -1,9 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 
-namespace MongoAPI.Models
+namespace MongoAPI.Models.KeyModels
 {
-    public class Client
+    public class Client : AEntityBase
     {
         [BsonId] public ObjectId Id { get; set; }
         public required string Name { get; set; }

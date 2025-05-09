@@ -1,4 +1,5 @@
 ﻿using MongoAPI.Models.Common;
+using MongoAPI.Models.KeyModels;
 
 namespace MongoAPI.Models.Hazards
 {

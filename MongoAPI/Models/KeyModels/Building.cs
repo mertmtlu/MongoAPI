@@ -1,9 +1,9 @@
 ﻿using MongoAPI.Models.Block;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace MongoAPI.Models
+namespace MongoAPI.Models.KeyModels
 {
-    public class Building
+    public class Building : AEntityBase
     {
         public int BuildingTMID { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -13,7 +13,8 @@ namespace MongoAPI.Models
         public string ReportName { get; set; } = string.Empty;
         //public ReportInput ReportInput { get; set; }
 
-        [BsonIgnore] public int Code
+        [BsonIgnore]
+        public int Code
         {
             get
             {
@@ -26,8 +27,9 @@ namespace MongoAPI.Models
                 }
             }
         }
-        [BsonIgnore] public int BKS 
-        { 
+        [BsonIgnore]
+        public int BKS
+        {
             get
             {
                 switch (Type)
@@ -35,7 +37,7 @@ namespace MongoAPI.Models
                     case BuildingType.Control: return 3;
                     default: return 1;
                 }
-            } 
+            }
         }
     }
 

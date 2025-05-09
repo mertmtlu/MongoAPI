@@ -3,9 +3,9 @@ using MongoAPI.Models.Hazards;
 using MongoAPI.Models.TMRelatedProperties;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace MongoAPI.Models
+namespace MongoAPI.Models.KeyModels
 {
-    public class TM
+    public class TM : AEntityBase
     {
         public int Id { get; set; }
         public List<TM> Alternatives { get; set; } = new();

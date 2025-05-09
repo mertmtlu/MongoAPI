@@ -1,11 +1,11 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using MongoAPI.Models;
 using MongoAPI.Models.Hazards;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Microsoft.OpenApi.Any;
+using MongoAPI.Models.KeyModels;
 
 namespace MongoAPI
 {
