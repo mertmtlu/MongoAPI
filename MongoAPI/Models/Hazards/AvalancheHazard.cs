@@ -10,7 +10,7 @@ namespace MongoAPI.Models.Hazards
         public string IncidentDescription { get; set; } = string.Empty;
         public double SnowDepth { get; set; }
         public required Location FirstHillLocation { get; set; }
-        public double ElevationDifference { get; set; } // Can be calculated automatically
+        public double ElevationDifference { get; set; } // TODO: Can be calculated automatically
 
     }
 }

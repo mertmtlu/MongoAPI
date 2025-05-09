@@ -9,7 +9,7 @@ namespace MongoAPI.Models
         public string Name { get; set; } = string.Empty;
         public BuildingType Type { get; set; }
         public bool InScopeOfMETU { get; set; }
-        public List<ABlock> Blocks { get; set; } = new List<ABlock>();
+        public List<ABlock> Blocks { get; set; } = new();
         public string ReportName { get; set; } = string.Empty;
         //public ReportInput ReportInput { get; set; }
 
@@ -26,7 +26,9 @@ namespace MongoAPI.Models
                 }
             }
         }
-        [BsonIgnore] public int BKS { get
+        [BsonIgnore] public int BKS 
+        { 
+            get
             {
                 switch (Type)
                 {
