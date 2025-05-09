@@ -1,11 +1,10 @@
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using MongoAPI.Models.Hazards;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using Microsoft.OpenApi.Any;
 using MongoAPI.Models.KeyModels;
+using MongoAPI.Repositories.Core;
+using MongoAPI.Repositories.Interfaces;
 
 namespace MongoAPI
 {
@@ -33,6 +32,12 @@ namespace MongoAPI
                 var client = sp.GetRequiredService<IMongoClient>();
                 return client.GetDatabase(settings.Value.DatabaseName);
             });
+
+            builder.Services.AddScoped<IClientRepository, ClientRepository>();
+            builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+            builder.Services.AddScoped<ITMRepository, TMRepository>();
+            builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
+            builder.Services.AddScoped<IBlockRepository, BlockRepository>();
 
             // Add services to the container.
             builder.Services.AddControllers();
