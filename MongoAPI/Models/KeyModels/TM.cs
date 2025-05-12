@@ -1,14 +1,15 @@
 ﻿using MongoAPI.Models.Common;
 using MongoAPI.Models.Hazards;
 using MongoAPI.Models.TMRelatedProperties;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace MongoAPI.Models.KeyModels
 {
     public class TM : AEntityBase
     {
+        public required ObjectId RegionID { get; set; }
         public int Id { get; set; }
-        public List<TM> Alternatives { get; set; } = new();
         public required string Name { get; set; }
         public TMType Type { get; set; } = TMType.Default;
         public TMState State { get; set; } = TMState.Active;
@@ -23,8 +24,7 @@ namespace MongoAPI.Models.KeyModels
         public required EarthquakeLevel DD1 { get; set; }
         public required EarthquakeLevel DD2 { get; set; }
         public required EarthquakeLevel DD3 { get; set; }
-        public required EarthquakeLevel EarthquakeScenario { get; set; }
-        public required List<Building> Buildings { get; set; } = new();
+        public EarthquakeLevel? EarthquakeScenario { get; set; } = null;
         public required Pollution Pollution { get; set; }
         public required FireHazard FireHazard { get; set; }
         public required SecurityHazard SecurityHazard { get; set; }

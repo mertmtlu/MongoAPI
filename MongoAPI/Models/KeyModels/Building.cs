@@ -1,10 +1,12 @@
 ﻿using MongoAPI.Models.Block;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace MongoAPI.Models.KeyModels
 {
     public class Building : AEntityBase
     {
+        public required ObjectId TmID { get; set; }
         public int BuildingTMID { get; set; }
         public string Name { get; set; } = string.Empty;
         public BuildingType Type { get; set; }

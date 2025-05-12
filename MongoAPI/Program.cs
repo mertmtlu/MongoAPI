@@ -3,8 +3,6 @@ using MongoDB.Driver;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using MongoAPI.Models.KeyModels;
-using MongoAPI.Repositories.Core;
-using MongoAPI.Repositories.Interfaces;
 
 namespace MongoAPI
 {
@@ -32,12 +30,6 @@ namespace MongoAPI
                 var client = sp.GetRequiredService<IMongoClient>();
                 return client.GetDatabase(settings.Value.DatabaseName);
             });
-
-            builder.Services.AddScoped<IClientRepository, ClientRepository>();
-            builder.Services.AddScoped<IRegionRepository, RegionRepository>();
-            builder.Services.AddScoped<ITMRepository, TMRepository>();
-            builder.Services.AddScoped<IBuildingRepository, BuildingRepository>();
-            builder.Services.AddScoped<IBlockRepository, BlockRepository>();
 
             // Add services to the container.
             builder.Services.AddControllers();
@@ -77,40 +69,50 @@ namespace MongoAPI
     {
         public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
         {
-            var type = typeof(Client);
-            var schema = context.SchemaGenerator.GenerateSchema(type, context.SchemaRepository);
-
-            var modelName = type.Name;
-            var path = $"/api/schema/{modelName.ToLowerInvariant()}";
-
-            swaggerDoc.Paths.Add(path, new OpenApiPathItem
+            var types = new List<Type>()
             {
-                Operations = new Dictionary<OperationType, OpenApiOperation>
+                typeof(Client),
+                typeof(Region),
+                typeof(TM),
+                typeof(Building)
+            };
+
+            foreach (var type in types)
+            {
+                var schema = context.SchemaGenerator.GenerateSchema(type, context.SchemaRepository);
+
+                var modelName = type.Name;
+                var path = $"/api/schema/{modelName.ToLowerInvariant()}";
+
+                swaggerDoc.Paths.Add(path, new OpenApiPathItem
                 {
-                    [OperationType.Get] = new OpenApiOperation
+                    Operations = new Dictionary<OperationType, OpenApiOperation>
                     {
-                        Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Schema Documentation" } },
-                        OperationId = $"Get{modelName}Schema",
-                        Responses = new OpenApiResponses
+                        [OperationType.Get] = new OpenApiOperation
                         {
-                            ["200"] = new OpenApiResponse
+                            Tags = new List<OpenApiTag> { new OpenApiTag { Name = "Schema Documentation" } },
+                            OperationId = $"Get{modelName}Schema",
+                            Responses = new OpenApiResponses
                             {
-                                Description = $"{modelName} Schema",
-                                Content = new Dictionary<string, OpenApiMediaType>
+                                ["200"] = new OpenApiResponse
                                 {
-                                    ["application/json"] = new OpenApiMediaType
+                                    Description = $"{modelName} Schema",
+                                    Content = new Dictionary<string, OpenApiMediaType>
                                     {
-                                        Schema = context.SchemaRepository.Schemas.GetValueOrDefault(type.Name) ??
-                                                 new OpenApiSchema { Reference = new OpenApiReference { Id = type.Name, Type = ReferenceType.Schema } }
+                                        ["application/json"] = new OpenApiMediaType
+                                        {
+                                            Schema = context.SchemaRepository.Schemas.GetValueOrDefault(type.Name) ??
+                                                     new OpenApiSchema { Reference = new OpenApiReference { Id = type.Name, Type = ReferenceType.Schema } }
+                                        }
                                     }
                                 }
-                            }
-                        },
-                        Summary = $"Get {modelName} Schema",
-                        Description = $"Returns the schema for {modelName}"
+                            },
+                            Summary = $"Get {modelName} Schema",
+                            Description = $"Returns the schema for {modelName}"
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 }
